@@ -1,0 +1,3 @@
+[submodule "TCSA.MathGame"]
+	path = TCSA.MathGame
+	url = https://github.com/Eulysses001/TCSA.MathGame.git
