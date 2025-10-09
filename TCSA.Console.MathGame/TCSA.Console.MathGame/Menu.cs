@@ -1,4 +1,5 @@
-﻿using TCSA.MathGame.Models;
+﻿using System.Security.AccessControl;
+using TCSA.MathGame.Models;
 
 namespace TCSA.MathGame;
 
@@ -20,6 +21,7 @@ internal class Menu
             Console.Clear();
             Console.WriteLine(@$"What game would you like to play today? Choose from the options below:
 V - Game History
+R - Random Game
 A - Addition
 S - Subtraction
 M - Multiplication
@@ -28,31 +30,40 @@ Q - Quit the program");
             Console.WriteLine("--------------------------------------------------------");
             var result = Console.ReadLine();
 
+            GameType gameType = default;
+            GameDifficulty gameDifficulty = default;
+
             switch (result.Trim().ToLower())
             {
                 case "v":
                     Helpers.PrintGames();
+                    continue;
+                case "r":
+                    gameType = Helpers.RandomizeGame();
+                    gameDifficulty = Helpers.GetDifficulty();
                     break;
                 case "a":
-                    engine.AdditionGame("Addition game.", ShowGameDifficulty());
+                    gameType = GameType.Addition;
                     break;
                 case "s":
-                    engine.SubtractionGame("Subtraction game.", ShowGameDifficulty());
+                    gameType = GameType.Subtraction;
                     break;
                 case "m":
-                    engine.MultiplicationGame("Multiplication game.", ShowGameDifficulty());
+                    gameType = GameType.Multiplication;
                     break;
                 case "d":
-                    engine.DivisionGame("Division game.", ShowGameDifficulty());
+                    gameType = GameType.Division;
                     break;
                 case "q":
                     Console.WriteLine("Goodbye");
                     isGameOn = false;
-                    break;
+                    continue;
                 default:
                     Console.WriteLine("Invalid Input");
-                    break;
+                    continue;
             }
+
+            engine.StartGame(gameType, gameDifficulty);
 
         } while (isGameOn);
     }
