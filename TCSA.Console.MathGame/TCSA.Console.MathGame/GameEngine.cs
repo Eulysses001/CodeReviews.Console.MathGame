@@ -7,7 +7,6 @@ internal class GameEngine
 {
     internal void StartGame(GameType type, GameDifficulty difficulty)
     {
-        var random = new Random();
         var message = Helpers.GetGameMessage(type);
         int score = 0;
         int firstNumber;
